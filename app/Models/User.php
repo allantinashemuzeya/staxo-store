@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -43,22 +45,28 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * @relationship BelongsTo a UserType
-     */
-    public function UserType(): BelongsTo
+
+    public function userType(): BelongsTo
     {
-        return $this->belongsTo(UserType::class);
+        return $this->belongsTo(UserType::class, 'user_type_id', 'id');
     }
 
-    /**
-     * @relationship HasMany Guest Users
-     */
-    public function GuestUser(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(GuestUser::class);
-    }
-
-
+//    /**
+//     * @relationship HasOne Wishlist
+//     */
+//    public function wishlist(): HasOne
+//    {
+//        return $this->hasOne(Wishlist::class);
+//    }
+//
+//    /**
+//     * @relationship HasMany Guest Users
+//     */
+//    public function guestUser(): HasMany
+//    {
+//        return $this->hasMany(GuestUser::class);
+//    }
+//
+//
 
 }

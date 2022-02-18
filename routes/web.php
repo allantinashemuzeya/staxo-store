@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StoreController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,11 +16,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return to_route('store-home');
 });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::controller(StoreController::class)->group(function(){
+    Route::get('/', 'index')->name('store-home');
+});
+
+Route::controller(ProductController::class)->group(function(){
+    Route::get('/products', 'index')->middleware(['auth'])->name('products');
+});
+
+
+
 
 require __DIR__.'/auth.php';

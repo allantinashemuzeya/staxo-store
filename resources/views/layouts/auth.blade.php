@@ -57,6 +57,23 @@ Contact: dev@allanthecodemaster.co.za
             letter-spacing: 2px;
             margin-top: 7px;
         }
+        body > div.app-content.content > div.content-wrapper > div.content-body > div > div > div > div > div > p{
+            font-size: 13px;
+            letter-spacing: 2px;
+            margin-top: 7px;
+        }
+        body > div.app-content.content > div.content-wrapper > div.content-body > div > div > div > div > form > div:nth-child(3) > div.d-flex.justify-content-between > a{
+                font-size: 13px;
+                letter-spacing: 2px;
+                margin-top: 7px;
+        }
+        body > div.app-content.content > div.content-wrapper > div.content-body > div > div > div > div > p.text-center.mt-2 > a > span{
+                    font-size: 13px;
+                    letter-spacing: 2px;
+                    margin-top: 7px;
+            }
+
+
     </style>
 
     <style>
@@ -109,8 +126,6 @@ Contact: dev@allanthecodemaster.co.za
 
 <!-- BEGIN: Body-->
 <body class="vertical-layout vertical-menu-modern blank-page navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="blank-page">
-
-
 
 <!-- BEGIN: Content-->
 <div class="app-content content ">
