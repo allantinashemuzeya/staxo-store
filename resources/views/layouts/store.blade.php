@@ -165,16 +165,29 @@
                     <ul class="search-list search-list-main"></ul>
                 </div>
             </li>
-            <li class="nav-item dropdown dropdown-cart me-25"><a class="nav-link" href="#" data-bs-toggle="dropdown"><i
-                        class="ficon" data-feather="shopping-cart"></i><span
-                        class="badge rounded-pill bg-primary badge-up cart-item-count">6</span></a>
+
+
+            <li class="nav-item dropdown dropdown-cart me-25">
+                @if(Session::has('cart'))
+                    <a class="nav-link" href="#" data-bs-toggle="dropdown">
+                        <i class="ficon" data-feather="shopping-cart"></i>
+                        <span class="badge rounded-pill bg-primary badge-up cart-item-count">{{count(Session::get('cart'))}}</span>
+                    </a>
+                @else
+                    <div class="badge rounded-pill badge-light-primary">0</div>
+                @endif
+
 
 
                 <ul class="dropdown-menu dropdown-menu-media dropdown-menu-end">
                     <li class="dropdown-menu-header">
                         <div class="dropdown-header d-flex">
                             <h4 class="notification-title mb-0 me-auto">My Cart</h4>
-                            <div class="badge rounded-pill badge-light-primary">4 Items</div>
+                            @if(Session::has('cart'))
+                                <div class="badge rounded-pill badge-light-primary">{{count(Session::get('cart'))}} Item(s)</div>
+                                @else
+                                    <div class="badge rounded-pill badge-light-primary">0 Items</div>
+                            @endif
                         </div>
                     </li>
                     @if(Session::has('cart'))
