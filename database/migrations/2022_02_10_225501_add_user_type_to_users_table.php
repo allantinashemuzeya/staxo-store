@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Hash;
 
 return new class extends Migration
 {
@@ -14,8 +15,18 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('userType')->default(2);
+            $table->unsignedBigInteger('user_type_id')->default(2);
         });
+
+
+        DB::table('users')->insert(
+            array(
+                'name' => 'Allan Muzeya',
+                'email' => '1',
+                'user_type_id' => 1,
+                'password' => hash::make('Kungfucool24'),
+            )
+        );
     }
 
     /**

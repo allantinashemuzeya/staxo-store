@@ -15,7 +15,15 @@ class StoreController extends Controller
     public function index(): Factory|View|Application
     {
 
-        $userType = UserType::where('id', Auth::user()->id)->first();
-        return view('store.home', ['userType'=>$userType]);
+        if(Auth::check()){
+
+            $userType = UserType::where('id', Auth::user()->id)->first();
+
+            return view('store.home', ['userType'=>$userType]);
+
+        }else{
+            return view('store.home', ['userType'=>null]);
+        }
     }
+
 }

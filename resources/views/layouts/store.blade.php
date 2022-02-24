@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 <html class="loading dark-layout" lang="en" data-layout="dark-layout" data-textdirection="ltr">
@@ -25,6 +24,15 @@
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/nouislider.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/toastr.min.css')}}">
     <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/vendors.min.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{asset('app-assets/vendors/css/forms/spinner/jquery.bootstrap-touchspin.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/swiper.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/toastr.min.css')}}">
+    <!-- END: Vendor CSS-->
+
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/vendors.min.css')}}">
@@ -56,15 +64,19 @@
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/vendors.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/tables/datatable/buttons.bootstrap5.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/tables/datatable/rowGroup.bootstrap4.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{asset('app-assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{asset('app-assets/vendors/css/tables/datatable/responsive.bootstrap4.min.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{asset('app-assets/vendors/css/tables/datatable/buttons.bootstrap5.min.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{asset('app-assets/vendors/css/tables/datatable/rowGroup.bootstrap4.min.css')}}">
+    <link rel="stylesheet" type="text/css"
+          href="{{asset('app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css')}}">
     <!-- END: Vendor CSS-->
 
     @livewireStyles
-
 
 
     <style>
@@ -156,6 +168,8 @@
             <li class="nav-item dropdown dropdown-cart me-25"><a class="nav-link" href="#" data-bs-toggle="dropdown"><i
                         class="ficon" data-feather="shopping-cart"></i><span
                         class="badge rounded-pill bg-primary badge-up cart-item-count">6</span></a>
+
+
                 <ul class="dropdown-menu dropdown-menu-media dropdown-menu-end">
                     <li class="dropdown-menu-header">
                         <div class="dropdown-header d-flex">
@@ -163,204 +177,167 @@
                             <div class="badge rounded-pill badge-light-primary">4 Items</div>
                         </div>
                     </li>
+                    @if(Session::has('cart'))
+
+                        @php
+                            $total_products = count(session::get('cart'));
+                            $total_price = 0;
+                            $quantity = 1;
+                            foreach(session::get('cart') as $product){
+                                $total_price = $total_price + ($product->price * $quantity);
+                            }
+                        @endphp
+
                     <li class="scrollable-container media-list">
-                        <div class="list-item align-items-center"><img class="d-block rounded me-1"
-                                                                       src="{{asset('app-assets/images/pages/eCommerce/1.png')}}"
-                                                                       alt="donuts" width="62">
-                            <div class="list-item-body flex-grow-1"><i class="ficon cart-item-remove"
-                                                                       data-feather="x"></i>
-                                <div class="media-heading">
-                                    <h6 class="cart-item-title"><a class="text-body" href="app-ecommerce-details.html">
-                                            Apple watch 5</a></h6><small class="cart-item-by">By Apple</small>
-                                </div>
-                                <div class="cart-item-qty">
-                                    <div class="input-group">
-                                        <input class="touchspin-cart" type="number" value="1">
+                           @foreach(session()->get('cart') as $product)
+                                <div class="list-item align-items-center">
+                                    <img class="d-block rounded me-1"
+                                         src="{{asset('storage/products/'.$product->image)}}"
+                                         alt="donuts" width="62">
+                                    <div class="list-item-body flex-grow-1">
+                                        <i class="ficon cart-item-remove"
+                                           data-feather="x"></i>
+                                        <div class="media-heading">
+                                            <h6 class="cart-item-title"><a class="text-body" href="{{route('product', $product->slug)}}">
+                                                   {{$product->name}}</a>
+                                            </h6>
+                                            <small class="cart-item-by">By Staxo Store</small>
+                                        </div>
+
+                                        <div class="cart-item-qty">
+                                            <div class="input-group">
+                                                <input  disabled class="touchspin-cart" type="number" value="1">
+                                            </div>
+                                        </div>
+                                        <h5 class="cart-item-price">R{{$product->price}}</h5>
                                     </div>
                                 </div>
-                                <h5 class="cart-item-price">$374.90</h5>
-                            </div>
-                        </div>
-                        <div class="list-item align-items-center"><img class="d-block rounded me-1"
-                                                                       src="{{asset('app-assets/images/pages/eCommerce/7.png')}}"
-                                                                       alt="donuts" width="62">
-                            <div class="list-item-body flex-grow-1"><i class="ficon cart-item-remove"
-                                                                       data-feather="x"></i>
-                                <div class="media-heading">
-                                    <h6 class="cart-item-title"><a class="text-body" href="app-ecommerce-details.html">
-                                            Google Home Mini</a></h6><small class="cart-item-by">By Google</small>
-                                </div>
-                                <div class="cart-item-qty">
-                                    <div class="input-group">
-                                        <input class="touchspin-cart" type="number" value="3">
-                                    </div>
-                                </div>
-                                <h5 class="cart-item-price">$129.40</h5>
-                            </div>
-                        </div>
-                        <div class="list-item align-items-center"><img class="d-block rounded me-1"
-                                                                       src="{{asset('app-assets/images/pages/eCommerce/2.png')}}"
-                                                                       alt="donuts" width="62">
-                            <div class="list-item-body flex-grow-1"><i class="ficon cart-item-remove"
-                                                                       data-feather="x"></i>
-                                <div class="media-heading">
-                                    <h6 class="cart-item-title"><a class="text-body" href="app-ecommerce-details.html">
-                                            iPhone 11 Pro</a></h6><small class="cart-item-by">By Apple</small>
-                                </div>
-                                <div class="cart-item-qty">
-                                    <div class="input-group">
-                                        <input class="touchspin-cart" type="number" value="2">
-                                    </div>
-                                </div>
-                                <h5 class="cart-item-price">$699.00</h5>
-                            </div>
-                        </div>
-                        <div class="list-item align-items-center"><img class="d-block rounded me-1"
-                                                                       src="{{asset('app-assets/images/pages/eCommerce/3.png')}}"
-                                                                       alt="donuts" width="62">
-                            <div class="list-item-body flex-grow-1"><i class="ficon cart-item-remove"
-                                                                       data-feather="x"></i>
-                                <div class="media-heading">
-                                    <h6 class="cart-item-title"><a class="text-body" href="app-ecommerce-details.html">
-                                            iMac Pro</a></h6><small class="cart-item-by">By Apple</small>
-                                </div>
-                                <div class="cart-item-qty">
-                                    <div class="input-group">
-                                        <input class="touchspin-cart" type="number" value="1">
-                                    </div>
-                                </div>
-                                <h5 class="cart-item-price">$4,999.00</h5>
-                            </div>
-                        </div>
-                        <div class="list-item align-items-center"><img class="d-block rounded me-1"
-                                                                       src="{{asset('app-assets/images/pages/eCommerce/5.png')}}"
-                                                                       alt="donuts" width="62">
-                            <div class="list-item-body flex-grow-1"><i class="ficon cart-item-remove"
-                                                                       data-feather="x"></i>
-                                <div class="media-heading">
-                                    <h6 class="cart-item-title"><a class="text-body" href="app-ecommerce-details.html">
-                                            MacBook Pro</a></h6><small class="cart-item-by">By Apple</small>
-                                </div>
-                                <div class="cart-item-qty">
-                                    <div class="input-group">
-                                        <input class="touchspin-cart" type="number" value="1">
-                                    </div>
-                                </div>
-                                <h5 class="cart-item-price">$2,999.00</h5>
-                            </div>
-                        </div>
+                           @endforeach
                     </li>
+
                     <li class="dropdown-menu-footer">
                         <div class="d-flex justify-content-between mb-1">
                             <h6 class="fw-bolder mb-0">Total:</h6>
-                            <h6 class="text-primary fw-bolder mb-0">$10,999.00</h6>
+                            <h6 class="text-primary fw-bolder mb-0">R{{$total_price}}</h6>
                         </div>
                         <a class="btn btn-primary w-100" href="app-ecommerce-checkout.html">Checkout</a>
                     </li>
+                        @else
+                        <li class="dropdown-menu-footer">
+                            <div class="d-flex justify-content-between mb-1">
+                                <h6 class="fw-bolder mb-0">Total:</h6>
+                                <h6 class="text-primary fw-bolder mb-0">R0.00</h6>
+                            </div>
+                            <a class="btn btn-primary w-100" href="app-ecommerce-checkout.html">Checkout</a>
+                        </li>
+                    @endif
+
                 </ul>
             </li>
 
             @if(Auth::check())
-                    <li class="nav-item dropdown dropdown-notification me-25"><a class="nav-link" href="#"
-                                                                                 data-bs-toggle="dropdown"><i class="ficon"
-                                                                                                              data-feather="bell"></i><span
-                                class="badge rounded-pill bg-danger badge-up">5</span></a>
-                        <ul class="dropdown-menu dropdown-menu-media dropdown-menu-end">
-                            <li class="dropdown-menu-header">
-                                <div class="dropdown-header d-flex">
-                                    <h4 class="notification-title mb-0 me-auto">Notifications</h4>
-                                    <div class="badge rounded-pill badge-light-primary">6 New</div>
-                                </div>
-                            </li>
-                            <li class="scrollable-container media-list"><a class="d-flex" href="#">
-                                    <div class="list-item d-flex align-items-start">
-                                        <div class="me-1">
-                                            <div class="avatar"><img
-                                                    src="{{asset('app-assets/images/portrait/small/avatar-s-15.jpg')}}"
-                                                    alt="avatar" width="32" height="32"></div>
-                                        </div>
-                                        <div class="list-item-body flex-grow-1">
-                                            <p class="media-heading"><span class="fw-bolder">Congratulation Sam 🎉</span>winner!
-                                            </p><small class="notification-text"> Won the monthly best seller badge.</small>
-                                        </div>
+                <li class="nav-item dropdown dropdown-notification me-25"><a class="nav-link" href="#"
+                                                                             data-bs-toggle="dropdown"><i class="ficon"
+                                                                                                          data-feather="bell"></i><span
+                            class="badge rounded-pill bg-danger badge-up">5</span></a>
+                    <ul class="dropdown-menu dropdown-menu-media dropdown-menu-end">
+                        <li class="dropdown-menu-header">
+                            <div class="dropdown-header d-flex">
+                                <h4 class="notification-title mb-0 me-auto">Notifications</h4>
+                                <div class="badge rounded-pill badge-light-primary">6 New</div>
+                            </div>
+                        </li>
+                        <li class="scrollable-container media-list"><a class="d-flex" href="#">
+                                <div class="list-item d-flex align-items-start">
+                                    <div class="me-1">
+                                        <div class="avatar"><img
+                                                src="{{asset('app-assets/images/portrait/small/avatar-s-15.jpg')}}"
+                                                alt="avatar" width="32" height="32"></div>
                                     </div>
-                                </a><a class="d-flex" href="#">
-                                    <div class="list-item d-flex align-items-start">
-                                        <div class="me-1">
-                                            <div class="avatar"><img
-                                                    src="{{asset('app-assets/images/portrait/small/avatar-s-3.jpg')}}"
-                                                    alt="avatar" width="32" height="32"></div>
-                                        </div>
-                                        <div class="list-item-body flex-grow-1">
-                                            <p class="media-heading"><span class="fw-bolder">New message</span>&nbsp;received
-                                            </p><small class="notification-text"> You have 10 unread messages</small>
-                                        </div>
-                                    </div>
-                                </a><a class="d-flex" href="#">
-                                    <div class="list-item d-flex align-items-start">
-                                        <div class="me-1">
-                                            <div class="avatar bg-light-danger">
-                                                <div class="avatar-content">MD</div>
-                                            </div>
-                                        </div>
-                                        <div class="list-item-body flex-grow-1">
-                                            <p class="media-heading"><span class="fw-bolder">Revised Order 👋</span>&nbsp;checkout
-                                            </p><small class="notification-text"> MD Inc. order updated</small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="list-item d-flex align-items-center">
-                                    <h6 class="fw-bolder me-auto mb-0">System Notifications</h6>
-                                    <div class="form-check form-check-primary form-switch">
-                                        <input class="form-check-input" id="systemNotification" type="checkbox" checked="">
-                                        <label class="form-check-label" for="systemNotification"></label>
+                                    <div class="list-item-body flex-grow-1">
+                                        <p class="media-heading"><span class="fw-bolder">Congratulation Sam 🎉</span>winner!
+                                        </p><small class="notification-text"> Won the monthly best seller badge.</small>
                                     </div>
                                 </div>
-                                <a class="d-flex" href="#">
-                                    <div class="list-item d-flex align-items-start">
-                                        <div class="me-1">
-                                            <div class="avatar bg-light-danger">
-                                                <div class="avatar-content"><i class="avatar-icon" data-feather="x"></i></div>
-                                            </div>
-                                        </div>
-                                        <div class="list-item-body flex-grow-1">
-                                            <p class="media-heading"><span class="fw-bolder">Server down</span>&nbsp;registered
-                                            </p><small class="notification-text"> USA Server is down due to high CPU
-                                                usage</small>
+                            </a><a class="d-flex" href="#">
+                                <div class="list-item d-flex align-items-start">
+                                    <div class="me-1">
+                                        <div class="avatar"><img
+                                                src="{{asset('app-assets/images/portrait/small/avatar-s-3.jpg')}}"
+                                                alt="avatar" width="32" height="32"></div>
+                                    </div>
+                                    <div class="list-item-body flex-grow-1">
+                                        <p class="media-heading"><span class="fw-bolder">New message</span>&nbsp;received
+                                        </p><small class="notification-text"> You have 10 unread messages</small>
+                                    </div>
+                                </div>
+                            </a><a class="d-flex" href="#">
+                                <div class="list-item d-flex align-items-start">
+                                    <div class="me-1">
+                                        <div class="avatar bg-light-danger">
+                                            <div class="avatar-content">MD</div>
                                         </div>
                                     </div>
-                                </a><a class="d-flex" href="#">
-                                    <div class="list-item d-flex align-items-start">
-                                        <div class="me-1">
-                                            <div class="avatar bg-light-success">
-                                                <div class="avatar-content"><i class="avatar-icon" data-feather="check"></i>
-                                                </div>
+                                    <div class="list-item-body flex-grow-1">
+                                        <p class="media-heading"><span class="fw-bolder">Revised Order 👋</span>&nbsp;checkout
+                                        </p><small class="notification-text"> MD Inc. order updated</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="list-item d-flex align-items-center">
+                                <h6 class="fw-bolder me-auto mb-0">System Notifications</h6>
+                                <div class="form-check form-check-primary form-switch">
+                                    <input class="form-check-input" id="systemNotification" type="checkbox" checked="">
+                                    <label class="form-check-label" for="systemNotification"></label>
+                                </div>
+                            </div>
+                            <a class="d-flex" href="#">
+                                <div class="list-item d-flex align-items-start">
+                                    <div class="me-1">
+                                        <div class="avatar bg-light-danger">
+                                            <div class="avatar-content"><i class="avatar-icon" data-feather="x"></i>
                                             </div>
                                         </div>
-                                        <div class="list-item-body flex-grow-1">
-                                            <p class="media-heading"><span class="fw-bolder">Sales report</span>&nbsp;generated
-                                            </p><small class="notification-text"> Last month sales report generated</small>
-                                        </div>
                                     </div>
-                                </a><a class="d-flex" href="#">
-                                    <div class="list-item d-flex align-items-start">
-                                        <div class="me-1">
-                                            <div class="avatar bg-light-warning">
-                                                <div class="avatar-content"><i class="avatar-icon"
-                                                                               data-feather="alert-triangle"></i></div>
+                                    <div class="list-item-body flex-grow-1">
+                                        <p class="media-heading"><span class="fw-bolder">Server down</span>&nbsp;registered
+                                        </p><small class="notification-text"> USA Server is down due to high CPU
+                                            usage</small>
+                                    </div>
+                                </div>
+                            </a><a class="d-flex" href="#">
+                                <div class="list-item d-flex align-items-start">
+                                    <div class="me-1">
+                                        <div class="avatar bg-light-success">
+                                            <div class="avatar-content"><i class="avatar-icon" data-feather="check"></i>
                                             </div>
                                         </div>
-                                        <div class="list-item-body flex-grow-1">
-                                            <p class="media-heading"><span class="fw-bolder">High memory</span>&nbsp;usage</p>
-                                            <small class="notification-text"> BLR Server using high memory</small>
+                                    </div>
+                                    <div class="list-item-body flex-grow-1">
+                                        <p class="media-heading"><span class="fw-bolder">Sales report</span>&nbsp;generated
+                                        </p><small class="notification-text"> Last month sales report generated</small>
+                                    </div>
+                                </div>
+                            </a><a class="d-flex" href="#">
+                                <div class="list-item d-flex align-items-start">
+                                    <div class="me-1">
+                                        <div class="avatar bg-light-warning">
+                                            <div class="avatar-content"><i class="avatar-icon"
+                                                                           data-feather="alert-triangle"></i></div>
                                         </div>
                                     </div>
-                                </a>
-                            </li>
-                            <li class="dropdown-menu-footer"><a class="btn btn-primary w-100" href="#">Read all
-                                    notifications</a></li>
-                        </ul>
-                    </li>
+                                    <div class="list-item-body flex-grow-1">
+                                        <p class="media-heading"><span class="fw-bolder">High memory</span>&nbsp;usage
+                                        </p>
+                                        <small class="notification-text"> BLR Server using high memory</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="dropdown-menu-footer"><a class="btn btn-primary w-100" href="#">Read all
+                                notifications</a></li>
+                    </ul>
+                </li>
             @endif
 
 
@@ -368,36 +345,46 @@
 
             @if(Auth::check())
 
-                    <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link"
-                                                                   id="dropdown-user" href="#" data-bs-toggle="dropdown"
-                                                                   aria-haspopup="true" aria-expanded="false">
-                            <div class="user-nav d-sm-flex d-none"><span class="user-name fw-bolder">{{Auth::user()->name}}</span><span
-                                    class="user-status">{{$userType->name}}</span></div>
-                            <span class="avatar"><img class="round"
-                                                      src="{{asset('app-assets/images/portrait/small/avatar-s-11.jpg')}}"
-                                                      alt="avatar" height="40" width="40"><span
-                                    class="avatar-status-online"></span></span></a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user"><a class="dropdown-item"
-                                                                                                        href="page-profile.html"><i
-                                    class="me-50" data-feather="user"></i> Profile</a>
-                            <a class="dropdown-item"  href="app-email.html"><i class="me-50" data-feather="mail"></i> Inbox</a>
-                            <a class="dropdown-item" href="app-todo.html"><i class="me-50" data-feather="check-square"></i> Task</a>
-                            <a class="dropdown-item" href="app-chat.html"><i class="me-50" data-feather="message-square"></i>Chats</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="page-account-settings.html"><i class="me-50"
-                                                                                          data-feather="settings"></i> Settings</a><a
-                                class="dropdown-item" href="page-pricing.html"><i class="me-50" data-feather="credit-card"></i>
-                                Pricing</a><a class="dropdown-item" href="page-faq.html"><i class="me-50"
-                                                                                            data-feather="help-circle"></i> FAQ</a><a
-                                class="dropdown-item" href="page-auth-login-v2.html"><i class="me-50" data-feather="power"></i>
-                                Logout</a>
-                        </div>
-                    </li>
+                <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link"
+                                                               id="dropdown-user" href="#" data-bs-toggle="dropdown"
+                                                               aria-haspopup="true" aria-expanded="false">
+                        <div class="user-nav d-sm-flex d-none"><span
+                                class="user-name fw-bolder">{{Auth::user()->name}}</span><span
+                                class="user-status">{{Auth::user()->userType->name}}</span></div>
+                        <span class="avatar"><img class="round"
+                                                  src="{{asset('app-assets/images/portrait/small/avatar-s-11.jpg')}}"
+                                                  alt="avatar" height="40" width="40"><span
+                                class="avatar-status-online"></span></span></a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user"><a
+                            class="dropdown-item"
+                            href="page-profile.html"><i
+                                class="me-50" data-feather="user"></i> Profile</a>
+                        <a class="dropdown-item" href="app-email.html"><i class="me-50" data-feather="mail"></i>
+                            Inbox</a>
+                        <a class="dropdown-item" href="app-todo.html"><i class="me-50" data-feather="check-square"></i>
+                            Task</a>
+                        <a class="dropdown-item" href="app-chat.html"><i class="me-50"
+                                                                         data-feather="message-square"></i>Chats</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="page-account-settings.html"><i class="me-50"
+                                                                                      data-feather="settings"></i>
+                            Settings</a><a
+                            class="dropdown-item" href="page-pricing.html"><i class="me-50"
+                                                                              data-feather="credit-card"></i>
+                            Pricing</a><a class="dropdown-item" href="page-faq.html"><i class="me-50"
+                                                                                        data-feather="help-circle"></i>
+                            FAQ</a><a
+                            class="dropdown-item" href="page-auth-login-v2.html"><i class="me-50"
+                                                                                    data-feather="power"></i>
+                            Logout</a>
+                    </div>
+                </li>
             @endif
 
         </ul>
     </div>
 </nav>
+
 <ul class="main-search-list-defaultlist d-none">
     <li class="d-flex align-items-center"><a href="#">
             <h6 class="section-label mt-75 mb-0">Files</h6></a></li>
@@ -526,12 +513,12 @@
                                                       data-i18n="Dashboards">Dashboards</span><span
                         class="badge badge-light-warning rounded-pill ms-auto me-1">2</span></a>
                 <ul class="menu-content">
-{{--                    <li><a class="d-flex align-items-center" href="dashboard-analytics.html"><i--}}
-{{--                                data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Analytics">Analytics</span></a>--}}
-{{--                    </li>--}}
-{{--                    <li><a class="d-flex align-items-center" href="dashboard-ecommerce.html"><i--}}
-{{--                                data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="eCommerce">eCommerce</span></a>--}}
-{{--                    </li>--}}
+                    {{--                    <li><a class="d-flex align-items-center" href="dashboard-analytics.html"><i--}}
+                    {{--                                data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Analytics">Analytics</span></a>--}}
+                    {{--                    </li>--}}
+                    {{--                    <li><a class="d-flex align-items-center" href="dashboard-ecommerce.html"><i--}}
+                    {{--                                data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="eCommerce">eCommerce</span></a>--}}
+                    {{--                    </li>--}}
                 </ul>
             </li>
             <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Shop & More</span><i
@@ -550,15 +537,18 @@
                     </li>
 
                     @if(Auth::check())
-                        @if($userType->name === 'Admin')
+                        @if(Auth::user()->userType->name === 'Admin')
                             <li>
-                                <a class="d-flex align-items-center" href="{{route('products')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Products</span></a>
+                                <a class="d-flex align-items-center" href="{{route('products')}}"><i
+                                        data-feather="circle"></i><span class="menu-item text-truncate"
+                                                                        data-i18n="Details">Products</span></a>
                             </li>
                         @endif
                     @endif
 
                     <li>
-                        <a class="d-flex align-items-center" href="app-ecommerce-details.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Details</span></a>
+                        <a class="d-flex align-items-center" href="app-ecommerce-details.html"><i
+                                data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Details</span></a>
                     </li>
                     <li><a class="d-flex align-items-center" href="app-ecommerce-wishlist.html"><i
                                 data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Wish List">Wish List</span></a>
@@ -736,12 +726,10 @@
 <!-- End: Customizer-->
 
 <!-- Buynow Button-->
-<div class="buy-now"><a href="https://1.envato.market/vuexy_admin" target="_blank" class="btn btn-danger">Buy Now</a>
 
 </div>
 <div class="sidenav-overlay"></div>
 <div class="drag-target"></div>
-
 
 
 <!-- BEGIN: Vendor JS-->
@@ -751,6 +739,12 @@
 <!-- BEGIN: Page Vendor JS-->
 <script src="{{asset('app-assets/vendors/js/extensions/wNumb.min.js')}}"></script>
 <script src="{{asset('app-assets/vendors/js/extensions/nouislider.min.js')}}"></script>
+<script src="{{asset('app-assets/vendors/js/extensions/toastr.min.js')}}"></script>
+<!-- END: Page Vendor JS-->
+
+<!-- BEGIN: Page Vendor JS-->
+<script src="{{asset('app-assets/vendors/js/forms/spinner/jquery.bootstrap-touchspin.js')}}"></script>
+<script src="{{asset('app-assets/vendors/js/extensions/swiper.min.js')}}"></script>
 <script src="{{asset('app-assets/vendors/js/extensions/toastr.min.js')}}"></script>
 <!-- END: Page Vendor JS-->
 

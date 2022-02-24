@@ -29,6 +29,7 @@ Route::controller(StoreController::class)->group(function(){
 
 Route::controller(ProductController::class)->group(function(){
     Route::get('/products', 'index')->middleware(['auth'])->name('products');
+    Route::get('/product/{slug}', 'productDetails')->name('product');
 });
 
 

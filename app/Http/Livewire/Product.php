@@ -32,16 +32,16 @@ class Product extends Component
     #[NoReturn] public function submitForm(){
 
 
-         $this->productBanner->store('products');
+         $this->productBanner->storePublicly('products', 'public');
 
          $product = new ProductModel();
          $product->name  = $this->productName;
          $product->slug  = Str::of($this->productName)->slug('-');
          $product->image = $this->productBanner->hashName();
+         $product->description = $this->productDescription;
          $product->price = $this->price;
          $product->productTypeId = 1;
 
-         $product->save();
 
          if( $product->save()){
              $this->response = ['message'=>'Product Saved Successfully', 'statusCode'=>200];
