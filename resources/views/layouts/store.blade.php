@@ -27,9 +27,15 @@
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/vendors.min.css')}}">
-    <link rel="stylesheet" type="text/css"
-          href="{{asset('app-assets/vendors/css/forms/spinner/jquery.bootstrap-touchspin.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/forms/spinner/jquery.bootstrap-touchspin.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/swiper.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/toastr.min.css')}}">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/vendors.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/forms/wizard/bs-stepper.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/forms/spinner/jquery.bootstrap-touchspin.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/toastr.min.css')}}">
     <!-- END: Vendor CSS-->
 
@@ -75,6 +81,16 @@
     <link rel="stylesheet" type="text/css"
           href="{{asset('app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css')}}">
     <!-- END: Vendor CSS-->
+
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/core/menu/menu-types/vertical-menu.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/app-ecommerce.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/forms/pickers/form-pickadate.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/forms/form-wizard.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/extensions/ext-component-toastr.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/forms/form-number-input.min.css')}}">
+    <!-- END: Page CSS-->
 
     @livewireStyles
 
@@ -193,7 +209,7 @@
                     @if(Session::has('cart'))
 
                         @php
-                            $total_products = count(session::get('cart'));
+                            $total_products = count(Session::get('cart'));
                             $total_price = 0;
                             $quantity = 1;
                             foreach(session::get('cart') as $product){
@@ -201,47 +217,46 @@
                             }
                         @endphp
 
-                    <li class="scrollable-container media-list">
-                           @foreach(session()->get('cart') as $product)
-                                <div class="list-item align-items-center">
-                                    <img class="d-block rounded me-1"
-                                         src="{{asset('storage/products/'.$product->image)}}"
-                                         alt="donuts" width="62">
-                                    <div class="list-item-body flex-grow-1">
-                                        <i class="ficon cart-item-remove"
-                                           data-feather="x"></i>
-                                        <div class="media-heading">
-                                            <h6 class="cart-item-title"><a class="text-body" href="{{route('product', $product->slug)}}">
-                                                   {{$product->name}}</a>
-                                            </h6>
-                                            <small class="cart-item-by">By Staxo Store</small>
-                                        </div>
-
-                                        <div class="cart-item-qty">
-                                            <div class="input-group">
-                                                <input  disabled class="touchspin-cart" type="number" value="1">
+                        <li class="scrollable-container media-list">
+                               @foreach(session()->get('cart') as $product)
+                                    <div class="list-item align-items-center">
+                                        <img class="d-block rounded me-1"
+                                             src="{{asset('storage/products/'.$product->image)}}"
+                                             alt="donuts" width="62">
+                                        <div class="list-item-body flex-grow-1">
+                                            <i class="ficon cart-item-remove"
+                                               data-feather="x"></i>
+                                            <div class="media-heading">
+                                                <h6 class="cart-item-title"><a class="text-body" href="{{route('product', $product->slug)}}">
+                                                       {{$product->name}}</a>
+                                                </h6>
+                                                <small class="cart-item-by">By Staxo Store</small>
                                             </div>
-                                        </div>
-                                        <h5 class="cart-item-price">R{{$product->price}}</h5>
-                                    </div>
-                                </div>
-                           @endforeach
-                    </li>
 
-                    <li class="dropdown-menu-footer">
-                        <div class="d-flex justify-content-between mb-1">
-                            <h6 class="fw-bolder mb-0">Total:</h6>
-                            <h6 class="text-primary fw-bolder mb-0">R{{$total_price}}</h6>
-                        </div>
-                        <a class="btn btn-primary w-100" href="app-ecommerce-checkout.html">Checkout</a>
-                    </li>
-                        @else
+                                            <div class="cart-item-qty">
+                                                <div class="input-group">
+                                                    <input  disabled class="touchspin-cart" type="number" value="1">
+                                                </div>
+                                            </div>
+                                            <h5 class="cart-item-price">R{{$product->price}}</h5>
+                                        </div>
+                                    </div>
+                               @endforeach
+                        </li>
+                        <li class="dropdown-menu-footer">
+                            <div class="d-flex justify-content-between mb-1">
+                                <h6 class="fw-bolder mb-0">Total:</h6>
+                                <h6 class="text-primary fw-bolder mb-0">R{{$total_price}}</h6>
+                            </div>
+                            <a class="btn btn-primary w-100" {{$total_products > 0 ? '': 'disabled'}} href="{{$total_products > 0 ? route('checkout'): ''}}">Checkout</a>
+                        </li>
+                    @else
                         <li class="dropdown-menu-footer">
                             <div class="d-flex justify-content-between mb-1">
                                 <h6 class="fw-bolder mb-0">Total:</h6>
                                 <h6 class="text-primary fw-bolder mb-0">R0.00</h6>
                             </div>
-                            <a class="btn btn-primary w-100" href="app-ecommerce-checkout.html">Checkout</a>
+                            <a class="btn btn-primary w-100" disabled="" href="#">Checkout</a>
                         </li>
                     @endif
 
@@ -752,6 +767,17 @@
 <!-- BEGIN: Page Vendor JS-->
 <script src="{{asset('app-assets/vendors/js/extensions/wNumb.min.js')}}"></script>
 <script src="{{asset('app-assets/vendors/js/extensions/nouislider.min.js')}}"></script>
+<script src="{{asset('app-assets/vendors/js/extensions/toastr.min.js')}}"></script>
+<!-- END: Page Vendor JS-->
+
+
+<!-- BEGIN: Page JS-->
+<script src="{{asset('app-assets/js/scripts/pages/app-ecommerce-checkout.min.js')}}"></script>
+<!-- END: Page JS-->
+
+<!-- BEGIN: Page Vendor JS-->
+<script src="{{asset('app-assets/vendors/js/forms/wizard/bs-stepper.min.js')}}"></script>
+<script src="{{asset('app-assets/vendors/js/forms/spinner/jquery.bootstrap-touchspin.js')}}"></script>
 <script src="{{asset('app-assets/vendors/js/extensions/toastr.min.js')}}"></script>
 <!-- END: Page Vendor JS-->
 

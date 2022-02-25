@@ -25,6 +25,10 @@ Route::get('/dashboard', function () {
 
 Route::controller(StoreController::class)->group(function(){
     Route::get('/', 'index')->name('store-home');
+    Route::get('/checkout', 'checkout')->name('checkout');
+    Route::get('/placeOrder', 'placeOrder')->name('placeOrder');
+    Route::get('/success', 'checkout')->name('success');
+    Route::get('/cancel', 'checkout')->name('cancel');
 });
 
 Route::controller(ProductController::class)->group(function(){
