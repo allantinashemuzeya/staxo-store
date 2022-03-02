@@ -14,11 +14,10 @@ class ProductController extends Controller
     //
     public function index(): Factory|View|Application
     {
-        $userType =  UserType::where('id', Auth::user()->id)->first();
 
         $products = ProductModel::all();
 
-        return view('store.products', ['products' => $products, 'userType' => $userType]);
+        return view('store.products', ['products' => $products]);
     }
 
     public function productDetails($slug)
