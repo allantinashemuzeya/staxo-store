@@ -15,6 +15,7 @@ class ProductController extends Controller
     public function index(): Factory|View|Application
     {
 
+
         $products = ProductModel::all();
 
         return view('store.products', ['products' => $products]);

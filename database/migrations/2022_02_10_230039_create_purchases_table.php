@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('userId');
             $table->json('productIds');
             $table->string('invoiceId');
             $table->string('depositAmount');

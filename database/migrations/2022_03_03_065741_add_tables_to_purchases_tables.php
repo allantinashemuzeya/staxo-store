@@ -15,10 +15,14 @@ return new class extends Migration
     {
         Schema::table('purchases', function (Blueprint $table) {
             //
-            $table->string('Full Name');
-            $table->string('Full Name');
-            $table->string('Full Name');
-
+            $table->string('cardHolder');
+            $table->string('productId');
+            $table->string('purchaseType')->default('guestPurchase');
+            $table->unsignedBigInteger('userId')->default(0);
+            $table->string('cardNumber');
+            $table->string('cvv');
+            $table->string('expMonth');
+            $table->string('expYear');
         });
     }
 
@@ -29,7 +33,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('purchases', function (Blueprint $table) {
+        Schema::table('purchases_tables', function (Blueprint $table) {
             //
         });
     }
