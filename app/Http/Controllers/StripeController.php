@@ -48,9 +48,10 @@ class StripeController extends Controller
             $purchase->invoiceId = 'invoice'.random_int(0,100);
             $purchase->depositAmount = $amount;
             $purchase->totalAmount = $amount * 2;
+            $purchase->stripeToken = $request->stripeToken;
             $purchase->cardHolder = $request->input('card-holder');
             $purchase->cardNumber = $request->input('card-number');
-            $purchase->productId =  $request->input('product-id');
+            $purchase->productId =  (int)$request->input('product-id');
             $purchase->purchaseType = Auth::check() ? 'authenticated-user': 'guest';
             $purchase->userId = Auth::check() ? Auth::user()->id: 0;
             $purchase->cvv = $request->input('cvv');

@@ -398,7 +398,7 @@
                 $('.has-error').removeClass('has-error');
                 $inputs.each(function(i, el) {
                     var $input = $(el);
-                    if ($input.val() === '') {
+                         if ($input.val() === '') {
                         $input.parent().addClass('has-error');
                         $errorMessage.removeClass('hide');
                         e.preventDefault();
