@@ -22,7 +22,7 @@ return new class extends Migration
         DB::table('users')->insert(
             array(
                 'name' => 'Allan Muzeya',
-                'email' => '1',
+                'email' => 'allan@staxostore.co.za',
                 'user_type_id' => 1,
                 'password' => hash::make('Kungfucool24'),
             )

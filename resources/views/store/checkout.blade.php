@@ -129,7 +129,7 @@
                                     <div class="item-options text-center">
                                         <div class="item-wrapper">
                                             <div class="item-cost">
-                                                <h4 class="item-price">$19.99</h4>
+                                                <h4 class="item-price">${{$product->price}}.00</h4>
                                                 <p class="card-text shipping">
                                                     <span class="badge rounded-pill badge-light-success">Free Shipping</span>
                                                 </p>
@@ -187,7 +187,7 @@
                                             <ul class="list-unstyled">
                                                 <li class="price-detail">
                                                     <div class="detail-title detail-total">Total</div>
-                                                    <div class="detail-amt fw-bolder">R{{$total_price}}</div>
+                                                    <div class="detail-amt fw-bolder">R{{$total_price}}.00</div>
                                                 </li>
                                             </ul>
                                             <button type="button" class="btn btn-primary w-100 btn-next place-order">Place Order</button>
@@ -291,7 +291,7 @@
                             <div class="customer-card">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h4 class="card-title">John Doe</h4>
+                                        <h4 class="card-title">{{Auth::check() ? Auth::user()->name : 'Guest'}}</h4>
                                     </div>
                                     <div class="card-body actions">
                                         <p class="card-text mb-0">9447 Glen Eagles Drive</p>
@@ -331,6 +331,7 @@
                                     <input type="hidden" name="product-id" value="{{$product->id}}"/>
                                     <input type="hidden" name="product-price" value="{{$product->price}}"/>
                                     <input type="hidden" name="product-name" value="{{$product->name}}"/>
+                                    <input type="hidden" name="total-price" value="{{$total_price}}"/>
 
                                     <div class='form-row row'>
                                         <div class='col-xs-12 form-group card required'>
@@ -338,6 +339,14 @@
                                             <input required autocomplete='off' class='form-control card-number' value="4242424242424242" size='20' name="card-number" type='text'>
                                         </div>
                                     </div>
+                                    <br/>
+                                    <div class='form-row row'>
+                                        <div class='col-xs-12 form-group card required'>
+                                            <label class='control-label'>Email Address</label>
+                                            <input required autocomplete='off' class='form-control card-number' value="allan@staxostore.co.za" size='20' name="emailAddress" type='text'>
+                                        </div>
+                                    </div>
+                                    <br/>
                                     <div class='form-row row'>
                                         <div class='col-xs-12 col-md-4 form-group cvc required'>
                                             <label class='control-label'>CVV</label>
@@ -355,13 +364,14 @@
                                                 type='text'>
                                         </div>
                                     </div>
-                                    <div class='form-row row'>
-                                        <div class='col-md-12 error form-group hide'>
-                                            <div class=' alert-warning alert'>Please correct the errors and try
-                                                again.
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <br/>
+{{--                                    <div class='form-row row'>--}}
+{{--                                        <div class='col-md-12 error form-group hide'>--}}
+{{--                                            <div class=' alert-warning alert'>Please correct the errors and try--}}
+{{--                                                again.--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                     <div class="row">
                                         <div class="col-xs-12">
                                             <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now (${{$total_price}})</button>
