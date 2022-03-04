@@ -1,6 +1,9 @@
 @extends('layouts.store')
 @section('content')
 
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    </head>
 {{--    @livewire('wishlist')--}}
     <div class="content-header row">
         <div class="content-header-left col-md-9 col-12 mb-2">
@@ -9,7 +12,7 @@
                     <h2 class="content-header-title float-start mb-0">Shop</h2>
                     <div class="breadcrumb-wrapper">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index-2.html">Home</a>
+                            <li class="breadcrumb-item"><a href="">Home</a>
                             </li>
                             <li class="breadcrumb-item active">Shop
                             </li>
@@ -18,11 +21,17 @@
                 </div>
             </div>
         </div>
+        @if (Session::has('success'))
+            <div class="alert alert-success text-center">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                <p>{{ Session::get('success') }}</p>
+            </div>
+        @endif
         <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
             <div class="mb-1 breadcrumb-right">
                 <div class="dropdown">
                     <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i></button>
-                    <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="app-todo.html"><i class="me-1" data-feather="check-square"></i><span class="align-middle">Todo</span></a><a class="dropdown-item" href="app-chat.html"><i class="me-1" data-feather="message-square"></i><span class="align-middle">Chat</span></a><a class="dropdown-item" href="app-email.html"><i class="me-1" data-feather="mail"></i><span class="align-middle">Email</span></a><a class="dropdown-item" href="app-calendar.html"><i class="me-1" data-feather="calendar"></i><span class="align-middle">Calendar</span></a></div>
+                    <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href=""><i class="me-1" data-feather="check-square"></i><span class="align-middle">Todo</span></a><a class="dropdown-item" href="app-chat.html"><i class="me-1" data-feather="message-square"></i><span class="align-middle">Chat</span></a><a class="dropdown-item" href="app-email.html"><i class="me-1" data-feather="mail"></i><span class="align-middle">Email</span></a><a class="dropdown-item" href="app-calendar.html"><i class="me-1" data-feather="calendar"></i><span class="align-middle">Calendar</span></a></div>
                 </div>
             </div>
         </div>
@@ -38,7 +47,7 @@
                                 <button class="navbar-toggler shop-sidebar-toggler" type="button" data-bs-toggle="collapse">
                                     <span class="navbar-toggler-icon d-block d-lg-none"><i data-feather="menu"></i></span>
                                 </button>
-                                <div class="search-results">16285 results found</div>
+                                <div class="search-results">{{count($products)}} results found</div>
                             </div>
                             <div class="view-options d-flex">
                                 <div class="btn-group dropdown-sort">
