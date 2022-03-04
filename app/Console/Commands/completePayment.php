@@ -4,10 +4,14 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\confirmFirstPayment;
+use App\Mail\confirmSecondPayment;
 use App\Models\Purchase;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Stripe;
 use Stripe\StripeClient;
 
@@ -46,15 +50,30 @@ class completePayment extends Command
     public function handle()
     {
        $purchases = Purchase::where(
-           'created_at' , '>=', Carbon::now()->subMinutes(5))->get();
-
+           [
+               ['created_at' , '<=', Carbon::now()->subMinutes(5)],
+               ['status', '=', 0]
+           ])->get();
 
        if(count($purchases) > 0 ){
            foreach ($purchases as $purchase){
-               $this->completePayment($purchase);
+               if($this->completePayment($purchase) === 'success'){
+                   $purchase->status = 1;
+                   $purchase->save();
+                   $data = [
+                       'orderNumber'=>$purchase->invoiceId,
+                       'date'=>Carbon::now()->isoFormat('dddd D MMM YYYY '),
+                       'cardHolder'=>$purchase->cardHolder,
+                       'paymentMethod'=>'Stripe',
+                       'currency'=>'USD',
+                       'products'=> [],
+                       'totalPrice'=>$purchase->depositAmount,
+                       'emailAddress'=>$purchase->emailAddress,
+                   ];
+                   Mail::to($purchase->emailAddress)->send(new confirmSecondPayment($data));
+               }
            }
        }
-
     }
 
     /**
@@ -88,10 +107,10 @@ class completePayment extends Command
                 .$data->cardHolder." for product with ID: "
                 .$data->productId,
         ])){
-          dd('Second Payment Complete');
+//          dd('Second Payment Complete');
           return 'success';
       }else{
-          dd('Second Payment Complete');
+//          dd('Second Payment Complete');
           return 'failed';
       }
 
