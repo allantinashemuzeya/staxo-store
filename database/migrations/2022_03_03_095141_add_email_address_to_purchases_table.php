@@ -13,13 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('purchases', function (Blueprint $table) {
-            $table->id();
-            $table->json('productIds');
-            $table->string('invoiceId');
-            $table->string('depositAmount');
-            $table->float('totalAmount');
-            $table->timestamps();
+        Schema::table('purchases', function (Blueprint $table) {
+            //
+            $table->string('emaemailAddressilAddress');
         });
     }
 
@@ -30,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchases');
+        Schema::table('purchases', function (Blueprint $table) {
+            //
+        });
     }
 };

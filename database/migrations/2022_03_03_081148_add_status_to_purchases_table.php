@@ -15,10 +15,7 @@ return new class extends Migration
     {
         Schema::table('purchases', function (Blueprint $table) {
             //
-            $table->string('Full Name');
-            $table->string('Full Name');
-            $table->string('Full Name');
-
+            $table->integer('status')->default(0);
         });
     }
 
