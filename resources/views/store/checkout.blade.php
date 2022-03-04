@@ -291,7 +291,7 @@
                             <div class="customer-card">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h4 class="card-title">John Doe</h4>
+                                        <h4 class="card-title">{{Auth::check() ? Auth::user()->name : 'Guest'}}</h4>
                                     </div>
                                     <div class="card-body actions">
                                         <p class="card-text mb-0">9447 Glen Eagles Drive</p>

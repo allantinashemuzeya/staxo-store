@@ -21,7 +21,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return to_route('store-home');
 })->middleware(['auth'])->name('dashboard');
 
 Route::controller(StoreController::class)->group(function(){
